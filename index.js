@@ -88,6 +88,7 @@ const eventMappers = [
         length: event.length,
         type: 'file',
         path: event.path,
+        info: event.info,
         fadeOutSeconds: 0.1,
         startInSourceSeconds: (numSteps - i - 1) * soi,
       };
