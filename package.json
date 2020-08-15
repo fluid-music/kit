@@ -4,7 +4,9 @@
   "description": "Simple Drum Kit for Fluid Music",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen": "sample-scan . metadata.js",
+    "prepare": "npm run gen"
   },
   "author": "Charles Holbrow",
   "license": "UNLICENSED",
@@ -12,5 +14,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/charlesholbrow/fluid-music-kit.git"
+  },
+  "devDependencies": {
+    "@fluid-music/utils": "0.2.0"
   }
 }

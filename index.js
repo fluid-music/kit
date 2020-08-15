@@ -1,9 +1,17 @@
 const path = require('path');
+const meta = require('./metadata');
 
-const getAbsolutePath = (filename) => path.join(__dirname, 'media', filename);
+const getAbsolutePath  = (filename) => path.join(__dirname, filename);
+const basenameToFileEvent = (basename, fadeOut, oneShot) => {
+  if (!meta.hasOwnProperty(basename))
+    throw new Error(`No metadata found for ${basename}`);
 
-function pathToNoteObject(filename, fadeOut, oneShot) {
-  const obj = { type: 'file', path: getAbsolutePath(filename) };
+  const obj = {
+    type: 'file',
+    info: Object.freeze(meta[basename].info),
+    path: getAbsolutePath(meta[basename].path),
+  }
+
   if (oneShot) obj.oneShot = true;
   if (typeof fadeOut === 'number') obj.fadeOutSeconds = fadeOut;
   return obj;
@@ -17,18 +25,7 @@ const acousticKickIntensityLayers = [
   'kick-acoustic-001.wav',
   'kick-acoustic-002.wav',
   'kick-acoustic-003.wav',
-].map((path) => pathToNoteObject(path, 0.01));
-
-const electronicKickPath = getAbsolutePath('kick-electronic-000.wav');
-
-/**
- * Two snare drum objects. Note that these are not intensity layers; they are
- * different performances at the same intensity.
- */
-const snarePaths = [
-  getAbsolutePath('snare-000.wav'),
-  getAbsolutePath('snare-001.wav'),
-];
+].map((path) => basenameToFileEvent(path, 0.01));
 
 const tambourineIntensityLayers = [
   'tambourine-000.wav',
@@ -38,20 +35,36 @@ const tambourineIntensityLayers = [
   'tambourine-004.wav',
   'tambourine-005.wav',
   'tambourine-006.wav',
-].map((path) => pathToNoteObject(path, undefined, true));
+].map((path) => basenameToFileEvent(path, undefined, true));
+
+/**
+ * Two snare drum objects. Note that these are not intensity layers; they are
+ * different performances at the same intensity.
+ */
+const snareEvents = [
+  'snare-000.wav',
+  'snare-001.wav',
+].map(path => basenameToFileEvent(path, 0.1));
+
+
+const rippleEvent = Object.assign({}, snareEvents[0]);
+rippleEvent.type = 'ripple';
+
+const electronicKickEvent   = meta['kick-electronic-000.wav'];
+electronicKickEvent.type    = 'file';
+electronicKickEvent.path    = getAbsolutePath(electronicKickEvent.path);
+electronicKickEvent.info    = Object.freeze(electronicKickEvent.info);
+electronicKickEvent.oneShot = true;
 
 /**
  * Simple drum pattern note library
  */
 const nLibrary = {
   d: { type: 'iLayers', iLayers: acousticKickIntensityLayers },
-  D: { type: 'file', path: electronicKickPath, oneShot: true },
-  k: { type: 'file', path: snarePaths[0] },
+  D: electronicKickEvent,
+  k: snareEvents[0],
   c: { type: 'random', choices: tambourineIntensityLayers },
-  r: {
-    type: 'ripple',
-    path: snarePaths[0],
-  }
+  r: rippleEvent,
 };
 
 const eventMappers = [
@@ -87,8 +100,6 @@ const eventMappers = [
 
 module.exports = {
   acousticKickIntensityLayers,
-  electronicKickPath,
-  snarePaths,
   tambourineIntensityLayers,
   nLibrary,
   eventMappers,
