@@ -81,11 +81,11 @@ const eventMappers = [
     // StartOffsetIncrement Number of seconds adjust sample start time
     const soi = 0.040;
 
-    const numSteps = Math.floor(event.length / stepSize);
+    const numSteps = Math.floor(event.duration / stepSize);
     const result =  new Array(numSteps).fill(null).map((_, i) => {
       newEvent = {
         startTime: event.startTime + i*stepSize,
-        length: event.length,
+        duration: stepSize + 1/64,
         type: 'file',
         path: event.path,
         info: event.info,
