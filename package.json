@@ -1,6 +1,6 @@
 {
   "name": "@fluid-music/kit",
-  "version": "3.0.0-0",
+  "version": "3.0.0-1",
   "description": "Simple Drum Kit for Fluid Music",
   "main": "index.js",
   "scripts": {
