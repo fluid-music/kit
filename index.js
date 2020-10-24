@@ -50,7 +50,7 @@ const tambourineRandomSoft = new fluid.techniques.Random({
   ].map((path, i) => {
     const fileTechnique = basenameToFileTechnique(path, undefined, true)
     // The original audio samples are intensity layers. Artificially soften the
-    // high intensity samples by trimming the attach and adding a fade in.
+    // high intensity samples by trimming the attack and adding a fade in.
     fileTechnique.startInSourceSeconds = 0.005 * i
     fileTechnique.fadeInSeconds = 0.005 * i
     return fileTechnique
