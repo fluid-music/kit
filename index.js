@@ -69,6 +69,7 @@ const snare = new fluid.techniques.Random({
 });
 
 const electronicKick = basenameToFileTechnique('kick-electronic-000.wav', 0, true)
+electronicKick.trimDb = -8.5
 
 class RippleTechnique extends fluid.techniques.AudioFile {
   /**
