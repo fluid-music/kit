@@ -6,6 +6,7 @@ const tLibrary = {
   d: acousticKickIntensityLayers,
   D: electronicKick,
   k: snare,
+  s: snare,
   t: tambourineRandomSoft,
   T: tambourineIntensityLayers,
   r: new RippleTechnique(snare.choices[0]),
