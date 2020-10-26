@@ -59,12 +59,12 @@ const tambourineRandomSoft = new fluid.techniques.Random({
     fileTechnique.fadeInSeconds = 0.005 * i
     return fileTechnique
   })
-});
+})
 
 /**
  * A simple, clean acoustic snare sound
  */
-const snare = basenameToFileTechnique('snare-000.wav', 0.1);
+const snare = basenameToFileTechnique('snare-000.wav', 0.1)
 
 /**
  * A snare with a little bit of "ring"
@@ -99,12 +99,12 @@ class RippleTechnique extends fluid.techniques.AudioFile {
         info: this.info,
         fadeOutSeconds: 0.1,
         startInSourceSeconds: (numSteps - i - 1) * soi,
-      });
+      })
 
       audioFileTechnique.use(newStartTime, newDuration, context)
     }
   }
-};
+}
 
 /**
  * Simple drum pattern note library
@@ -118,11 +118,11 @@ const tLibrary = {
   t: tambourineRandomSoft,
   T: tambourineIntensityLayers,
   r: new RippleTechnique(snare),
-};
+}
 
 module.exports = {
   acousticKickIntensityLayers,
   tambourineIntensityLayers,
   RippleTechnique,
   tLibrary,
-};
+}

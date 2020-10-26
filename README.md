@@ -7,10 +7,13 @@ const tLibrary = {
   D: electronicKick,
   k: snare,
   s: snare,
+  S: snareRing,
   t: tambourineRandomSoft,
   T: tambourineIntensityLayers,
-  r: new RippleTechnique(snare.choices[0]),
-};
+  r: new RippleTechnique(snare),
+}
 
 module.exports.tLibrary = tLibrary
 ```
+
+See `index.js` for details
