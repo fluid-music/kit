@@ -24,7 +24,11 @@ const acousticKickIntensityLayers = new fluid.techniques.ILayers({
     'kick-acoustic-001.wav',
     'kick-acoustic-002.wav',
     'kick-acoustic-003.wav',
-  ].map((path) => basenameToFileTechnique(path, 0.01))
+  ].map((path) => {
+    const audioFile = basenameToFileTechnique(path, 0.01)
+    audioFile.trimDb = -8.5
+    return audioFile
+  })
 });
 
 const tambourineIntensityLayers = new fluid.techniques.ILayers({
@@ -58,15 +62,14 @@ const tambourineRandomSoft = new fluid.techniques.Random({
 });
 
 /**
- * Two snare drum objects. Note that these are not intensity layers; they are
- * different performances at the same intensity.
+ * A simple, clean acoustic snare sound
  */
-const snare = new fluid.techniques.Random({
-    choices: [
-    'snare-000.wav',
-    'snare-001.wav',
-  ].map(path => basenameToFileTechnique(path, 0.1))
-});
+const snare = basenameToFileTechnique('snare-000.wav', 0.1);
+
+/**
+ * A snare with a little bit of "ring"
+ */
+const snareRing = basenameToFileTechnique('snare-001.wav', 0.1);
 
 const electronicKick = basenameToFileTechnique('kick-electronic-000.wav', 0, true)
 electronicKick.trimDb = -8.5
@@ -111,9 +114,10 @@ const tLibrary = {
   D: electronicKick,
   k: snare,
   s: snare,
+  S: snareRing,
   t: tambourineRandomSoft,
   T: tambourineIntensityLayers,
-  r: new RippleTechnique(snare.choices[0]),
+  r: new RippleTechnique(snare),
 };
 
 module.exports = {
