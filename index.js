@@ -10,7 +10,6 @@ const basenameToFileTechnique = (basename, fadeOut, oneShot) => {
   return new fluid.techniques.AudioFile({
     info: Object.freeze(meta[basename].info),
     path: getAbsolutePath(meta[basename].path),
-    oneShot: !!oneShot,
     fadeOutSeconds: typeof fadeOut === 'number' ? fadeOut : 0
   })
 }
