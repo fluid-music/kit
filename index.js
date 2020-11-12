@@ -10,7 +10,8 @@ const basenameToFileTechnique = (basename, fadeOut, oneShot) => {
   return new fluid.techniques.AudioFile({
     info: Object.freeze(meta[basename].info),
     path: getAbsolutePath(meta[basename].path),
-    fadeOutSeconds: typeof fadeOut === 'number' ? fadeOut : 0
+    fadeOutSeconds: typeof fadeOut === 'number' ? fadeOut : 0,
+    mode: fluid.FluidAudioFile.Modes.OneVoice,
   })
 }
 
@@ -25,7 +26,7 @@ const acousticKickIntensityLayers = new fluid.techniques.ILayers({
     'kick-acoustic-003.wav',
   ].map((path) => {
     const audioFile = basenameToFileTechnique(path, 0.01)
-    audioFile.trimDb = -8.5
+    audioFile.gainDb = -8.5
     return audioFile
   })
 });
@@ -71,7 +72,7 @@ const snare = basenameToFileTechnique('snare-000.wav', 0.1)
 const snareRing = basenameToFileTechnique('snare-001.wav', 0.1);
 
 const electronicKick = basenameToFileTechnique('kick-electronic-000.wav', 0, true)
-electronicKick.trimDb = -8.5
+electronicKick.gainDb = -8.5
 
 class RippleTechnique extends fluid.techniques.AudioFile {
   /**
@@ -79,7 +80,8 @@ class RippleTechnique extends fluid.techniques.AudioFile {
    * @param {number} duration in whole notes
    * @param {import('fluid-music/built/fluid-interfaces').ClipEventContext} context
    */
-  use (startTime, duration, context) {
+  use (context) {
+    const { startTime, duration, session } = context
     // 1/24 and 0.020
     // 1/16 and 0.040
     // How long to wait between re-triggers measured in whole notes
@@ -90,8 +92,10 @@ class RippleTechnique extends fluid.techniques.AudioFile {
     const numSteps = Math.floor(duration / stepSize);
 
     for (let i = 0; i < numSteps; i++) {
-      let newStartTime = startTime + i*stepSize
-      let newDuration = stepSize + 1/128
+      context.startTime = startTime + i*stepSize
+      context.duration = stepSize + 1/128
+      context.startTimeSeconds = session.timeWholeNotesToSeconds(context.startTime)
+      context.durationSeconds = session.timeWholeNotesToSeconds(context.duration)
 
       const audioFileTechnique =  new fluid.techniques.AudioFile({
         path: this.path,
@@ -100,7 +104,7 @@ class RippleTechnique extends fluid.techniques.AudioFile {
         startInSourceSeconds: (numSteps - i - 1) * soi,
       })
 
-      audioFileTechnique.use(newStartTime, newDuration, context)
+      audioFileTechnique.use(context)
     }
   }
 }
