@@ -72,7 +72,7 @@ const snare = basenameToFileTechnique('snare-000.wav', 0.1)
 const snareRing = basenameToFileTechnique('snare-001.wav', 0.1);
 
 const electronicKick = basenameToFileTechnique('kick-electronic-000.wav', 0, true)
-electronicKick.gainDb = -8.5
+electronicKick.gainDb = -10.5
 
 class RippleTechnique extends fluid.techniques.AudioFile {
   /**
