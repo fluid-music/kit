@@ -76,9 +76,7 @@ electronicKick.gainDb = -10.5
 
 class RippleTechnique extends fluid.techniques.AudioFile {
   /**
-   * @param {number} startTime in whole note relative to the clip
-   * @param {number} duration in whole notes
-   * @param {import('fluid-music/built/fluid-interfaces').ClipEventContext} context
+   * @param {import('fluid-music/built/fluid-interfaces').UseContext} context
    */
   use (context) {
     const { startTime, duration, session } = context
