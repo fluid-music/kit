@@ -1,6 +1,6 @@
 {
   "name": "@fluid-music/kit",
-  "version": "4.0.0-3",
+  "version": "4.0.0",
   "description": "Simple Drum Kit for Fluid Music",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,6 @@
     "@fluid-music/utils": "0.2.0"
   },
   "peerDependencies": {
-    "fluid-music": "^0.6.0-4"
+    "fluid-music": "^0.6.0-4||^0.7||^0.8"
   }
 }
