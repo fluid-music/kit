@@ -3,7 +3,7 @@ const path = require('path');
 const meta = require('./metadata');
 
 const getAbsolutePath  = (filename) => path.join(__dirname, filename);
-const basenameToFileTechnique = (basename, fadeOut, oneShot) => {
+const basenameToFileTechnique = (basename, fadeOut) => {
   if (!meta.hasOwnProperty(basename))
     throw new Error(`No metadata found for ${basename}`);
 
